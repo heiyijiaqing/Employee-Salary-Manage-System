@@ -64,4 +64,16 @@ public class DepartmentController {
         Department bean=departmentService.get(id);
         return bean;
     }
+
+    @PutMapping("/departments/{id}")
+    public Object update(Department bean, MultipartFile image,HttpServletRequest request) throws Exception {
+        String name = request.getParameter("name");
+        bean.setName(name);
+        departmentService.update(bean);
+
+        if(image!=null) {
+            saveOrUpdateImageFile(bean, image, request);
+        }
+        return bean;
+    }
 }

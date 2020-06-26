@@ -43,4 +43,8 @@ public class DepartmentService {
         Department d= departmentDAO.findOne(id);
         return d;
     }
+
+    public void update(Department bean) {
+        departmentDAO.save(bean);
+    }
 }
