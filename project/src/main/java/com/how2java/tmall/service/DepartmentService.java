@@ -34,4 +34,13 @@ public class DepartmentService {
     public void add(Department bean){
         departmentDAO.save(bean);
     }
+
+    public void delete(int id) {
+        departmentDAO.delete(id);
+    }
+
+    public Department get(int id) {
+        Department d= departmentDAO.findOne(id);
+        return d;
+    }
 }
