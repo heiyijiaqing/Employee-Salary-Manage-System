@@ -25,7 +25,7 @@ public class DepartmentService {
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
 
-    //首先创建一个 Sort 对象，表示通过 id 倒排序， 然后通过 categoryDAO进行查询。
+    //首先创建一个 Sort 对象，表示通过 id 倒排序， 然后通过 departmentDAO进行查询。
     public List<Department> list(){
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         return departmentDAO.findAll(sort);

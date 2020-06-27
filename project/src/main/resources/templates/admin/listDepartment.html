@@ -32,8 +32,8 @@
                 add: function () {
                     if(!checkEmpty(this.bean.name, "分类名称"))
                         return;
-                    if(!checkEmpty(this.file, "分类图片"))
-                        return;
+                    // if(!checkEmpty(this.file, "分类图片"))
+                    //     return;
                     var url = this.uri;
 
                     //axios.js 上传文件要用 formData 这种方式
@@ -83,7 +83,7 @@
             <thead>
             <tr class="success">
                 <th>ID</th>
-                <th>图片</th>
+<!--                <th>图片</th>-->
                 <th>分类名称</th>
                 <th>属性管理</th>
                 <th>产品管理</th>
@@ -94,9 +94,9 @@
             <tbody>
             <tr v-for="bean in beans ">
                 <td>{{bean.id}}</td>
-                <td>
-                    <img height="40px"  :src="'img/category/'+bean.id+'.jpg'">
-                </td>
+<!--                <td>-->
+<!--                    <img height="40px"  :src="'img/category/'+bean.id+'.jpg'">-->
+<!--                </td>-->
                 <td>
                     {{bean.name}}
                 </td>
@@ -125,12 +125,12 @@
                     <td>分类名称</td>
                     <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
-                <tr>
-                    <td>分类图片</td>
-                    <td>
-                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />
-                    </td>
-                </tr>
+<!--                <tr>-->
+<!--                    <td>分类图片</td>-->
+<!--                    <td>-->
+<!--                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />-->
+<!--                    </td>-->
+<!--                </tr>-->
                 <tr class="submitTR">
                     <td colspan="2" align="center">
                         <a href="#nowhere"  @click="add" class="btn btn-success">提交</a>

@@ -64,12 +64,12 @@
                     <td>分类名称</td>
                     <td><input  @keyup.enter="update" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
-                <tr>
-                    <td>分类图片</td>
-                    <td>
-                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />
-                    </td>
-                </tr>
+<!--                <tr>-->
+<!--                    <td>分类图片</td>-->
+<!--                    <td>-->
+<!--                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />-->
+<!--                    </td>-->
+<!--                </tr>-->
                 <tr class="submitTR">
                     <td colspan="2" align="center">
                         <input type="hidden" name="id"   v-model.trim="bean.id" >

@@ -14,11 +14,11 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    private int id;
 
-    int id;
-    String name;
-    Date createDate;
-    int isDel;
+    private String name;
+    private Date createDate;
+    private int isDel;
 
     public int getId() {
         return id;
