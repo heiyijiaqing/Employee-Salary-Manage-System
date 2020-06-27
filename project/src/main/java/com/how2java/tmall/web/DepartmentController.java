@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,6 +36,7 @@ public class DepartmentController {
 
     @PostMapping("/departments")
     public Object add(Department bean, MultipartFile image, HttpServletRequest request) throws Exception {
+        bean.setCreateDate(new Date()); //自动录入当前时间
         departmentService.add(bean);
         saveOrUpdateImageFile(bean, image, request);
         return bean;

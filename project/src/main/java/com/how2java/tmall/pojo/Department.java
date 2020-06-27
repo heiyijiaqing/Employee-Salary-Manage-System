@@ -4,6 +4,7 @@ package com.how2java.tmall.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Department")
@@ -16,6 +17,7 @@ public class Department {
 
     int id;
     String name;
+    Date createDate;
     int isDel;
 
     public int getId() {
@@ -32,6 +34,14 @@ public class Department {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public int getIsDel() {
