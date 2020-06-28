@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="include/admin/adminHeader::html('部门管理')" ></head>
+<head th:include="include/admin/adminHeader::html('用户管理')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
 <script>
     $(function(){
         var data4Vue = {
-            uri:'departments',
+            uri:'users',
             beans: [],
             bean: { id: 0, name: ''},
             pagination:{},
@@ -30,7 +30,7 @@
                     });
                 },
                 add: function () {
-                    if(!checkEmpty(this.bean.name, "部门名称"))
+                    if(!checkEmpty(this.bean.name, "用户名称"))
                         return;
                     // if(!checkEmpty(this.file, "分类图片"))
                     //     return;
@@ -75,7 +75,7 @@
 
 </script>
 <div id="workingArea" >
-    <h1 class="label label-info" >部门管理</h1>
+    <h1 class="label label-info" >用户管理</h1>
     <br>
     <br>
     <div class="listDataTableDiv">
@@ -83,10 +83,15 @@
             <thead>
             <tr class="success">
                 <th>ID</th>
-<!--                <th>图片</th>-->
-                <th>部门名称</th>
-                <th>属性管理</th>
-                <th>产品管理</th>
+                <!--                <th>图片</th>-->
+                <th>用户名称</th>
+                <th>所属部门</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>职位</th>
+                <th>电话号码</th>
+                <th>薪资基本参数管理</th>
+                <th>奖励和惩罚管理</th>
                 <th>编辑</th>
                 <th>删除</th>
             </tr>
@@ -94,20 +99,35 @@
             <tbody>
             <tr v-for="bean in beans ">
                 <td>{{bean.id}}</td>
-<!--                <td>-->
-<!--                    <img height="40px"  :src="'img/category/'+bean.id+'.jpg'">-->
-<!--                </td>-->
+                <!--                <td>-->
+                <!--                    <img height="40px"  :src="'img/category/'+bean.id+'.jpg'">-->
+                <!--                </td>-->
                 <td>
                     {{bean.name}}
+                </td>
+                <td>
+                    {{bean.departmentId}}
+                </td>
+                <td>
+                    {{bean.sex}}
+                </td>
+                <td>
+                    {{bean.age}}
+                </td>
+                <td>
+                    {{bean.jobTitle}}
+                </td>
+                <td>
+                    {{bean.phoneNumber}}
                 </td>
                 <td>
                     <a :href="'admin_property_list?cid=' + bean.id "><span class="glyphicon glyphicon-th-list"></span></a>
                 </td>
                 <td>
-                    <a :href="'admin_product_list?cid=' + bean.id "><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <a :href="'admin_product_list?cid=' + bean.id "><span class="glyphicon glyphicon-th-list"></span></a>
                 </td>
                 <td>
-                    <a :href="'admin_department_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
+                    <a :href="'admin_user_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
                 <td>
                     <a href="#nowhere"  @click="deleteBean(bean.id)"><span class="   glyphicon glyphicon-trash"></span></a>
@@ -118,19 +138,53 @@
     </div>
     <div th:replace="include/admin/adminPage::html" ></div>
     <div class="panel panel-warning addDiv">
-        <div class="panel-heading">新增部门</div>
+        <div class="panel-heading">新增用户</div>
         <div class="panel-body">
             <table class="addTable">
                 <tr>
-                    <td>部门名称</td>
+                    <td>用户名称</td>
                     <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
-<!--                <tr>-->
-<!--                    <td>分类图片</td>-->
-<!--                    <td>-->
-<!--                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />-->
-<!--                    </td>-->
-<!--                </tr>-->
+                <tr>
+                    <td>所属部门</td>
+                    <td>
+                        <input  @keyup.enter="add" v-model.trim="bean.departmentId" type="text" class="form-control">
+<!--                        <select @keyup.enter="add" v-model.trim="bean.departmentId" class="form-control" id="departmentId">-->
+<!--                            <option value="20" selected="selected">人力资源部</option>-->
+<!--                            <option value="21">财务部</option>-->
+<!--                        </select>-->
+                    </td>
+                </tr>
+                <tr>
+                    <td>账号</td>
+                    <td><input  @keyup.enter="add" v-model.trim="bean.account" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>密码</td>
+                    <td><input  @keyup.enter="add" v-model.trim="bean.password" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>性别</td>
+                    <td><input  @keyup.enter="add" v-model.trim="bean.sex" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>年龄</td>
+                    <td><input  @keyup.enter="add" v-model.trim="bean.age" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>职位</td>
+                    <td><input  @keyup.enter="add" v-model.trim="bean.jobTitle" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>电话号码</td>
+                    <td><input  @keyup.enter="add" v-model.trim="bean.phoneNumber" type="text" class="form-control"></td>
+                </tr>
+                <!--                <tr>-->
+                <!--                    <td>分类图片</td>-->
+                <!--                    <td>-->
+                <!--                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />-->
+                <!--                    </td>-->
+                <!--                </tr>-->
                 <tr class="submitTR">
                     <td colspan="2" align="center">
                         <a href="#nowhere"  @click="add" class="btn btn-success">提交</a>

@@ -34,31 +34,6 @@ public class DepartmentController {
         return page;
     }
 
-//    @GetMapping("/properties/{id}")
-//    public Department get(@PathVariable("id") int id) throws Exception {
-//        Department bean=departmentService.get(id);
-//        return bean;
-//    }
-//
-//    @PostMapping("/properties")
-//    public Object add(@RequestBody Department bean) throws Exception {
-//        bean.setCreateDate(new Date()); //自动录入当前时间
-//        departmentService.add(bean);
-//        return bean;
-//    }
-//
-//    @DeleteMapping("/properties/{id}")
-//    public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
-//        departmentService.delete(id);
-//        return null;
-//    }
-//
-//    @PutMapping("/properties")
-//    public Object update(@RequestBody Department bean) throws Exception {
-//        departmentService.update(bean);
-//        return bean;
-//    }
-
     @PostMapping("/departments")
     public Object add(Department bean, MultipartFile image, HttpServletRequest request) throws Exception {
         bean.setCreateDate(new Date()); //自动录入当前时间
@@ -97,6 +72,7 @@ public class DepartmentController {
     public Object update(Department bean, MultipartFile image,HttpServletRequest request) throws Exception {
         String name = request.getParameter("name");
         bean.setName(name);
+        bean.setCreateDate(new Date()); //自动录入当前时间
         departmentService.update(bean);
 
 //        if(image!=null) {

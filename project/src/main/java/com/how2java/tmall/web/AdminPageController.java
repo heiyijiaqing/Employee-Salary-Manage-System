@@ -20,4 +20,14 @@ public class AdminPageController {
     public String editDepartment(){
         return "admin/editDepartment";
     }
+
+    @GetMapping(value = "/admin_user_list")
+    public String listUser(){
+        return "admin/listUser";
+    }
+
+    @GetMapping(value="/admin_user_edit")
+    public String editUser(){
+        return "admin/editUser";
+    }
 }
