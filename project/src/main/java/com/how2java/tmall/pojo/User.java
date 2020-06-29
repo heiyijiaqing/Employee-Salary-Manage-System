@@ -16,11 +16,11 @@ public class User {
     @Column(name = "id")
     private int id;
 
-//    @ManyToOne
-//    @JoinColumn(name="departmentId")
-    private int departmentId;
+    @ManyToOne
+    @JoinColumn(name="departmentId")
+//    private int departmentId;
 
-//    private Department department;
+    private Department department;
 
     private String account;
     private String password;
@@ -41,21 +41,21 @@ public class User {
         this.id = id;
     }
 
-//    public Department getDepartment() {
-//        return department;
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+//    public int getDepartmentId() {
+//        return departmentId;
 //    }
 //
-//    public void setDepartment(Department department) {
-//        this.department = department;
+//    public void setDepartmentId(int departmentId) {
+//        this.departmentId = departmentId;
 //    }
-
-    public int getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
-    }
 
     public String getAccount() {
         return account;

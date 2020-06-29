@@ -1,6 +1,7 @@
 package com.how2java.tmall.service;
 
 import com.how2java.tmall.dao.UserDAO;
+import com.how2java.tmall.pojo.Department;
 import com.how2java.tmall.pojo.User;
 import com.how2java.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,19 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired UserDAO userDAO;
+    @Autowired DepartmentService departmentService;
+
+//    public Page4Navigator<User> list(int departmentId, int start, int size,int navigatePages) {
+//        Department department = departmentService.get(departmentId);
+//
+//        Sort sort = new Sort(Sort.Direction.DESC, "id");
+//        Pageable pageable = new PageRequest(start, size, sort);
+//
+//        Page<User> pageFromJPA =userDAO.findByDepartment(department,pageable);
+//
+//        return new Page4Navigator<>(pageFromJPA,navigatePages);
+//
+//    }
 
     //做分页
     public Page4Navigator<User> list(int start, int size, int navigatePages){

@@ -30,22 +30,12 @@ public class UserController {
         return page;
     }
 
-    @PostMapping("/users")
-    public Object add(User bean, MultipartFile image, HttpServletRequest request) throws Exception {
-        bean.setCreateDate(new Date()); //自动录入当前时间
-        userService.add(bean);
-//        saveOrUpdateImageFile(bean, image, request);
-        return bean;
-    }
-
-    @DeleteMapping("/users/{id}")
-    public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
-        userService.delete(id);
-        File  imageFolder= new File(request.getServletContext().getRealPath("img/category"));
-        File file = new File(imageFolder,id+".jpg");
-        file.delete();
-        return null;
-    }
+//    @GetMapping("/departments/{cid}/users")
+//    public Page4Navigator<User> list(@PathVariable("departmentId") int departmentId, @RequestParam(value = "start", defaultValue = "0") int start,@RequestParam(value = "size", defaultValue = "10") int size) throws Exception {
+//        start = start<0?0:start;
+//        Page4Navigator<User> page =userService.list(departmentId, start, size,5);
+//        return page;
+//    }
 
     @GetMapping("/users/{id}")
     public User get(@PathVariable("id") int id) throws Exception {
@@ -53,13 +43,52 @@ public class UserController {
         return bean;
     }
 
-    @PutMapping("/users/{id}")
-    public Object update(User bean, MultipartFile image,HttpServletRequest request) throws Exception {
-        String name = request.getParameter("name");
-        bean.setName(name);
-        bean.setCreateDate(new Date()); //自动录入当前时间
-        userService.update(bean);
-
+    @PostMapping("/users")
+    public Object add(@RequestBody User bean) throws Exception {
+        userService.add(bean);
         return bean;
     }
+
+    @DeleteMapping("/users/{id}")
+    public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
+        userService.delete(id);
+        return null;
+    }
+
+    @PutMapping("/users")
+    public Object update(@RequestBody User bean) throws Exception {
+        userService.update(bean);
+        return bean;
+    }
+
+//    @PostMapping("/users")
+//    public Object add(User bean, MultipartFile image, HttpServletRequest request) throws Exception {
+//        bean.setCreateDate(new Date()); //自动录入当前时间
+//        userService.add(bean);
+//        return bean;
+//    }
+//
+//    @DeleteMapping("/users/{id}")
+//    public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
+//        userService.delete(id);
+//        File  imageFolder= new File(request.getServletContext().getRealPath("img/category"));
+//        File file = new File(imageFolder,id+".jpg");
+//        file.delete();
+//        return null;
+//    }
+//
+//    @GetMapping("/users/{id}")
+//    public User get(@PathVariable("id") int id) throws Exception {
+//        User bean=userService.get(id);
+//        return bean;
+//    }
+//
+//    @PutMapping("/users/{id}")
+//    public Object update(User bean, MultipartFile image,HttpServletRequest request) throws Exception {
+//        String name = request.getParameter("name");
+//        bean.setName(name);
+//        bean.setCreateDate(new Date()); //自动录入当前时间
+//        userService.update(bean);
+//        return bean;
+//    }
 }

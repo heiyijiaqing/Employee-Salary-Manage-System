@@ -1,17 +1,19 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="include/admin/adminHeader::html('部门管理')" ></head>
+<head th:include="include/admin/adminHeader::html('薪资基本参数管理')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
 <script>
     $(function(){
+        var userId = getUrlParms("userId");
         var data4Vue = {
-            uri:'departments',
+            uri:'basicSalaries',
             beans: [],
-            bean: { id: 0, name: ''},
+            bean: {id:0,basicSalary:0,user:{id:0}},
             pagination:{},
-            file: null
+            user:''
         };
 
         //ViewModel
@@ -19,32 +21,31 @@
             el: '#workingArea',
             data: data4Vue,
             mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                this.getUser(userId);
                 this.list(0);
             },
             methods: {
+                getUser:function(userId){
+                    var url = "users/"+userId;
+                    axios.get(url).then(function(response) {
+                        vue.user = response.data;
+                    })
+                },
                 list:function(start){
-                    var url =  this.uri+ "?start="+start;
+                    var url =  "users/"+userId+"/"+this.uri+"?start="+start;
                     axios.get(url).then(function(response) {
                         vue.pagination = response.data;
                         vue.beans = response.data.content	;
                     });
                 },
                 add: function () {
-                    if(!checkEmpty(this.bean.name, "部门名称"))
+                    if(!checkEmpty(this.bean.basicSalary, "基本工资"))
                         return;
-                    // if(!checkEmpty(this.file, "分类图片"))
-                    //     return;
                     var url = this.uri;
-
-                    //axios.js 上传文件要用 formData 这种方式
-                    var formData = new FormData();
-                    formData.append("image", this.file);
-                    formData.append("name", this.bean.name);
-                    axios.post(url,formData).then(function(response){
+                    this.bean.user.id = userId;
+                    axios.post(url,this.bean).then(function(response){
                         vue.list(0);
-                        vue.bean = { id: 0, name: '', hp: '0'};
-                        $("#categoryPic").val('');
-                        vue.file = null;
+                        vue.bean = {id:0,basicSalary:0,user:{id:0}};
                     });
                 },
                 deleteBean: function (id) {
@@ -52,16 +53,11 @@
                         return;
                     var url = this.uri+"/"+id;
                     axios.delete(url).then(function(response){
-                        if(0!=response.data.length){
+                        if(0!=response.data.length)
                             alert(response.data);
-                        }
-                        else{
+                        else
                             vue.list(0);
-                        }
                     });
-                },
-                getFile: function (event) {
-                    this.file = event.target.files[0];
                 },
                 jump: function(page){
                     jump(page,vue); //定义在adminHeader.html 中
@@ -70,23 +66,29 @@
                     jumpByNumber(start,vue);
                 }
             }
+
         });
     });
 
 </script>
+
 <div id="workingArea" >
-    <h1 class="label label-info" >部门管理</h1>
-    <br>
-    <br>
+    <ol class="breadcrumb">
+        <li><a href="admin_user_list">所有薪资基本参数</a></li>
+        <li><a :href="'admin_basicsalary_list?userId='+user.id">{{user.name}}</a></li>
+        <li class="active">薪资基本参数管理</li>
+    </ol>
+
     <div class="listDataTableDiv">
         <table class="table table-striped table-bordered table-hover  table-condensed">
             <thead>
             <tr class="success">
                 <th>ID</th>
-<!--                <th>图片</th>-->
-                <th>部门名称</th>
-<!--                <th>属性管理</th>-->
-<!--                <th>产品管理</th>-->
+                <th>基本工资</th>
+                <th>迟到扣薪标准</th>
+                <th>旷工扣薪标准</th>
+                <th>周末加班薪资标准</th>
+                <th>节日加班薪资标准</th>
                 <th>编辑</th>
                 <th>删除</th>
             </tr>
@@ -94,20 +96,23 @@
             <tbody>
             <tr v-for="bean in beans ">
                 <td>{{bean.id}}</td>
-<!--                <td>-->
-<!--                    <img height="40px"  :src="'img/category/'+bean.id+'.jpg'">-->
-<!--                </td>-->
                 <td>
-                    {{bean.name}}
+                    {{bean.basicSalary}}
                 </td>
-<!--                <td>-->
-<!--                    <a :href="'admin_property_list?cid=' + bean.id "><span class="glyphicon glyphicon-th-list"></span></a>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <a :href="'admin_product_list?cid=' + bean.id "><span class="glyphicon glyphicon-shopping-cart"></span></a>-->
-<!--                </td>-->
                 <td>
-                    <a :href="'admin_department_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
+                    {{bean.laterDeductMoney}}
+                </td>
+                <td>
+                    {{bean.absenceDeductMoney}}
+                </td>
+                <td>
+                    {{bean.weekendOverWorkMoney}}
+                </td>
+                <td>
+                    {{bean.holidayOverWorkMoney}}
+                </td>
+                <td>
+                    <a :href="'admin_basicsalary_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
                 <td>
                     <a href="#nowhere"  @click="deleteBean(bean.id)"><span class="   glyphicon glyphicon-trash"></span></a>
@@ -116,21 +121,25 @@
             </tbody>
         </table>
     </div>
+
     <div th:replace="include/admin/adminPage::html" ></div>
+
     <div class="panel panel-warning addDiv">
-        <div class="panel-heading">新增部门</div>
+        <div class="panel-heading">新增薪资基本参数</div>
         <div class="panel-body">
             <table class="addTable">
                 <tr>
-                    <td>部门名称</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
+                    <td>基本工资</td>
+                    <td><input  @keyup.enter="add"  v-model.trim="bean.basicSalary" type="number" class="form-control"></td>
                 </tr>
-<!--                <tr>-->
-<!--                    <td>分类图片</td>-->
-<!--                    <td>-->
-<!--                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />-->
-<!--                    </td>-->
-<!--                </tr>-->
+                <tr>
+                    <td>迟到扣薪标准</td>
+                    <td><input  @keyup.enter="add"  v-model.trim="bean.laterDeductMoney" type="number" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>旷工扣薪标准</td>
+                    <td><input  @keyup.enter="add"  v-model.trim="bean.absenceDeductMoney" type="number" class="form-control"></td>
+                </tr>
                 <tr class="submitTR">
                     <td colspan="2" align="center">
                         <a href="#nowhere"  @click="add" class="btn btn-success">提交</a>
@@ -140,6 +149,8 @@
         </div>
     </div>
 </div>
+
 <div th:replace="include/admin/adminFooter::html" ></div>
 </body>
 </html>
+
