@@ -5,13 +5,78 @@
 <head th:include="include/admin/adminHeader::html('薪资基本参数管理')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
+<!--<script>-->
+<!--    $(function(){-->
+<!--        var userId = getUrlParms("userId");-->
+<!--        var data4Vue = {-->
+<!--            uri:'basicSalaries',-->
+<!--            beans: [],-->
+<!--            bean: {id:0,basicSalary:0,user:{id:0}},-->
+<!--            pagination:{},-->
+<!--            user:''-->
+<!--        };-->
+
+<!--        //ViewModel-->
+<!--        var vue = new Vue({-->
+<!--            el: '#workingArea',-->
+<!--            data: data4Vue,-->
+<!--            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了-->
+<!--                this.getUser(userId);-->
+<!--                this.list(0);-->
+<!--            },-->
+<!--            methods: {-->
+<!--                getUser:function(userId){-->
+<!--                    var url = "users/"+userId;-->
+<!--                    axios.get(url).then(function(response) {-->
+<!--                        vue.user = response.data;-->
+<!--                    })-->
+<!--                },-->
+<!--                list:function(start){-->
+<!--                    var url =  "users/"+userId+"/"+this.uri+"?start="+start;-->
+<!--                    axios.get(url).then(function(response) {-->
+<!--                        vue.pagination = response.data;-->
+<!--                        vue.beans = response.data.content	;-->
+<!--                    });-->
+<!--                },-->
+<!--                add: function () {-->
+<!--                    if(!checkEmpty(this.bean.basicSalary, "基本工资"))-->
+<!--                        return;-->
+<!--                    var url = this.uri;-->
+<!--                    this.bean.user.id = userId;-->
+<!--                    axios.post(url,this.bean).then(function(response){-->
+<!--                        vue.list(0);-->
+<!--                        vue.bean = {id:0,basicSalary:0,user:{id:0}};-->
+<!--                    });-->
+<!--                },-->
+<!--                deleteBean: function (id) {-->
+<!--                    if(!checkDeleteLink())-->
+<!--                        return;-->
+<!--                    var url = this.uri+"/"+id;-->
+<!--                    axios.delete(url).then(function(response){-->
+<!--                        if(0!=response.data.length)-->
+<!--                            alert(response.data);-->
+<!--                        else-->
+<!--                            vue.list(0);-->
+<!--                    });-->
+<!--                },-->
+<!--                jump: function(page){-->
+<!--                    jump(page,vue); //定义在adminHeader.html 中-->
+<!--                },-->
+<!--                jumpByNumber: function(start){-->
+<!--                    jumpByNumber(start,vue);-->
+<!--                }-->
+<!--            }-->
+
+<!--        });-->
+<!--    });-->
+
+<!--</script>-->
 <script>
     $(function(){
-        var userId = getUrlParms("userId");
         var data4Vue = {
             uri:'basicSalaries',
             beans: [],
-            bean: {id:0,basicSalary:0,user:{id:0}},
+            bean: {id:0,user:{id:0}},
             pagination:{},
             user:''
         };
@@ -21,31 +86,29 @@
             el: '#workingArea',
             data: data4Vue,
             mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
-                this.getUser(userId);
                 this.list(0);
             },
             methods: {
-                getUser:function(userId){
-                    var url = "users/"+userId;
-                    axios.get(url).then(function(response) {
-                        vue.user = response.data;
-                    })
-                },
                 list:function(start){
-                    var url =  "users/"+userId+"/"+this.uri+"?start="+start;
+                    var url =  this.uri+ "?start="+start;
                     axios.get(url).then(function(response) {
                         vue.pagination = response.data;
-                        vue.beans = response.data.content	;
+                        vue.beans = response.data.content;
                     });
                 },
                 add: function () {
-                    if(!checkEmpty(this.bean.basicSalary, "基本工资"))
-                        return;
+                    // if(!checkEmpty(this.bean.name, "用户名称"))
+                    //     return;
+
+                    //输出新增时输入的数据
+                    console.log(JSON.stringify(this.bean));
+
                     var url = this.uri;
-                    this.bean.user.id = userId;
+                    // this.bean.user.id = userId;
                     axios.post(url,this.bean).then(function(response){
+                        //回到初始状态
                         vue.list(0);
-                        vue.bean = {id:0,basicSalary:0,user:{id:0}};
+                        vue.bean = {id:0,user:{id:0}};
                     });
                 },
                 deleteBean: function (id) {
@@ -53,11 +116,16 @@
                         return;
                     var url = this.uri+"/"+id;
                     axios.delete(url).then(function(response){
-                        if(0!=response.data.length)
+                        if(0!=response.data.length){
                             alert(response.data);
-                        else
+                        }
+                        else{
                             vue.list(0);
+                        }
                     });
+                },
+                getFile: function (event) {
+                    this.file = event.target.files[0];
                 },
                 jump: function(page){
                     jump(page,vue); //定义在adminHeader.html 中
@@ -66,12 +134,10 @@
                     jumpByNumber(start,vue);
                 }
             }
-
         });
     });
 
 </script>
-
 <div id="workingArea" >
     <ol class="breadcrumb">
         <li><a href="admin_user_list">所有薪资基本参数</a></li>
@@ -84,6 +150,8 @@
             <thead>
             <tr class="success">
                 <th>ID</th>
+                <th>员工</th>
+                <th>所属部门</th>
                 <th>基本工资</th>
                 <th>迟到扣薪标准</th>
                 <th>旷工扣薪标准</th>
@@ -95,7 +163,15 @@
             </thead>
             <tbody>
             <tr v-for="bean in beans ">
-                <td>{{bean.id}}</td>
+                <td>
+                    {{bean.id}}
+                </td>
+                <td>
+                    {{bean.user.name}}
+                </td>
+                <td>
+                    {{bean.user.department.name}}
+                </td>
                 <td>
                     {{bean.basicSalary}}
                 </td>
@@ -128,6 +204,10 @@
         <div class="panel-heading">新增薪资基本参数</div>
         <div class="panel-body">
             <table class="addTable">
+                <tr>
+                    <td>员工ID</td>
+                    <td><input  @keyup.enter="add"  v-model.trim="bean.user.id" type="text" class="form-control"></td>
+                </tr>
                 <tr>
                     <td>基本工资</td>
                     <td><input  @keyup.enter="add"  v-model.trim="bean.basicSalary" type="number" class="form-control"></td>

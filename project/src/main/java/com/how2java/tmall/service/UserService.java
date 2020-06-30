@@ -54,7 +54,7 @@ public class UserService {
     }
 
     public User get(int id) {
-        User d= userDAO.findOne(id);
+        User d = userDAO.findOne(id);
         return d;
     }
 

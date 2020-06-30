@@ -32,15 +32,23 @@ public class BasicSalaryService {
         basicSalaryDAO.save(bean);
     }
 
-    public Page4Navigator<BasicSalary> list(int userId, int start, int size, int navigatePages) {
-        User user = userService.get(userId);
-
+    public Page4Navigator<BasicSalary> list(int start, int size, int navigatePages){
         Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = new PageRequest(start, size, sort);
-
-        Page<BasicSalary> pageFromJPA =basicSalaryDAO.findByUser(user,pageable);
+        Pageable pageable = new PageRequest(start, size,sort);
+        Page pageFromJPA =basicSalaryDAO.findAll(pageable);
 
         return new Page4Navigator<>(pageFromJPA,navigatePages);
-
     }
+
+//    public Page4Navigator<BasicSalary> list(int userId, int start, int size, int navigatePages) {
+//        User user = userService.get(userId);
+//
+//        Sort sort = new Sort(Sort.Direction.DESC, "id");
+//        Pageable pageable = new PageRequest(start, size, sort);
+//
+//        Page<BasicSalary> pageFromJPA =basicSalaryDAO.findByUser(user,pageable);
+//
+//        return new Page4Navigator<>(pageFromJPA,navigatePages);
+//
+//    }
 }

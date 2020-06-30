@@ -6,15 +6,24 @@ import com.how2java.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @RestController
 public class BasicSalaryController {
     @Autowired BasicSalaryService basicSalaryService;
 
-    @GetMapping("/users/{userId}/basicSalaries")
-    public Page4Navigator<BasicSalary> list(@PathVariable("userId") int userId, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size) throws Exception {
-        start = start<0?0:start;
-        Page4Navigator<BasicSalary> page =basicSalaryService.list(userId, start, size,5);
+//    @GetMapping("/users/{userId}/basicSalaries")
+//    public Page4Navigator<BasicSalary> list(@PathVariable("userId") int userId, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size) throws Exception {
+//        start = start<0?0:start;
+//        Page4Navigator<BasicSalary> page =basicSalaryService.list(userId, start, size,5);
+//        return page;
+//    }
+
+    //DepartmentController 修改原 list 方法，接受 start 和 size 参数。
+    @GetMapping("/basicSalaries")
+    public Page4Navigator<BasicSalary> list(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size) throws Exception {
+        start = start < 0 ? 0 : start;
+        Page4Navigator<BasicSalary> page = basicSalaryService.list(start, size, 5);  //5表示导航分页最多有5个，像 [1,2,3,4,5] 这样
         return page;
     }
 
@@ -28,6 +37,7 @@ public class BasicSalaryController {
     public Object add(@RequestBody BasicSalary bean) throws Exception {
         bean.setWeekendOverWorkMoney(bean.getBasicSalary() * 2);
         bean.setHolidayOverWorkMoney(bean.getBasicSalary() * 3);
+        bean.setCreateDate(new Date());
         basicSalaryService.add(bean);
         return bean;
     }
