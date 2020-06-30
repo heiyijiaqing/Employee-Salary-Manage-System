@@ -4,13 +4,58 @@
 <head th:include="include/admin/adminHeader::html('编辑用户')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
+<!--<script>-->
+<!--    $(function(){-->
+<!--        var data4Vue = {-->
+<!--            uri: 'users',-->
+<!--            listURL:'admin_user_list',-->
+<!--            bean: { id: 0, name: '', hp: '0'},-->
+<!--            file:''-->
+<!--        };-->
+
+<!--        //ViewModel-->
+<!--        var vue = new Vue({-->
+<!--            el: '#workingArea',-->
+<!--            data: data4Vue,-->
+<!--            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了-->
+<!--                this.get();-->
+<!--            },-->
+<!--            methods: {-->
+<!--                get:function(){-->
+<!--                    var id = getUrlParms("id");-->
+<!--                    var url = this.uri+"/"+id;-->
+<!--                    axios.get(url).then(function(response) {-->
+<!--                        vue.bean = response.data;-->
+<!--                    })-->
+<!--                },-->
+<!--                update:function () {-->
+<!--                    if(!checkEmpty(this.bean.name, "用户名称"))-->
+<!--                        return;-->
+<!--                    var url = this.uri+"/"+this.bean.id;-->
+
+<!--                    //axios.js 上传文件要用 formData 这种方式-->
+<!--                    var formData = new FormData();-->
+<!--                    formData.append("image", this.file);-->
+<!--                    formData.append("name", this.bean.name);-->
+<!--                    axios.put(url,formData).then(function(response){-->
+<!--                        location.href=vue.listURL;-->
+<!--                    });-->
+<!--                },-->
+<!--                getFile: function (event) {-->
+<!--                    this.file = event.target.files[0];-->
+<!--                }-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
 <script>
     $(function(){
         var data4Vue = {
             uri: 'users',
             listURL:'admin_user_list',
-            bean: { id: 0, name: '', hp: '0'},
-            file:''
+            bean: '',
+            department:''
         };
 
         //ViewModel
@@ -26,23 +71,17 @@
                     var url = this.uri+"/"+id;
                     axios.get(url).then(function(response) {
                         vue.bean = response.data;
+                        vue.department = vue.bean.department;
+                        // console.log(JSON.stringify(vue.bean));
                     })
                 },
                 update:function () {
                     if(!checkEmpty(this.bean.name, "用户名称"))
                         return;
-                    var url = this.uri+"/"+this.bean.id;
-
-                    //axios.js 上传文件要用 formData 这种方式
-                    var formData = new FormData();
-                    formData.append("image", this.file);
-                    formData.append("name", this.bean.name);
-                    axios.put(url,formData).then(function(response){
-                        location.href=vue.listURL;
+                    var url = this.uri;
+                    axios.put(url,vue.bean).then(function(response){
+                        location.href=vue.listURL+"?departmentId="+vue.department.id;
                     });
-                },
-                getFile: function (event) {
-                    this.file = event.target.files[0];
                 }
             }
         });
@@ -65,34 +104,34 @@
                     <td><input  @keyup.enter="update" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
                 <tr>
-                    <td>所属部门</td>
+                    <td>所属部门id</td>
                     <td>
-                        <input  @keyup.enter="add" v-model.trim="bean.departmentId" type="text" class="form-control">
+                        <input  @keyup.enter="update" v-model.trim="bean.department.id" type="text" class="form-control">
                     </td>
                 </tr>
                 <tr>
                     <td>账号</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.account" type="text" class="form-control"></td>
+                    <td><input  @keyup.enter="update" v-model.trim="bean.account" type="text" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>密码</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.password" type="text" class="form-control"></td>
+                    <td><input  @keyup.enter="update" v-model.trim="bean.password" type="text" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>性别</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.sex" type="text" class="form-control"></td>
+                    <td><input  @keyup.enter="update" v-model.trim="bean.sex" type="text" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>年龄</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.age" type="text" class="form-control"></td>
+                    <td><input  @keyup.enter="update" v-model.trim="bean.age" type="text" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>职位</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.jobTitle" type="text" class="form-control"></td>
+                    <td><input  @keyup.enter="update" v-model.trim="bean.jobTitle" type="text" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>电话号码</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.phoneNumber" type="text" class="form-control"></td>
+                    <td><input  @keyup.enter="update" v-model.trim="bean.phoneNumber" type="text" class="form-control"></td>
                 </tr>
                 <!--                <tr>-->
                 <!--                    <td>分类图片</td>-->

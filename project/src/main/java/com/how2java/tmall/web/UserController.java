@@ -45,6 +45,7 @@ public class UserController {
 
     @PostMapping("/users")
     public Object add(@RequestBody User bean) throws Exception {
+        bean.setCreateDate(new Date());
         userService.add(bean);
         return bean;
     }

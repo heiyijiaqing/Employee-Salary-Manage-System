@@ -10,7 +10,7 @@
         var data4Vue = {
             uri:'users',
             beans: [],
-            bean: {id:0,department:{id:0},name:'',account:'',password:'',sex:0,age:0,phoneNumber:0,jobTitle:0},
+            bean: {id:0,department:{id:0}},
             pagination:{},
             department:''
         };
@@ -42,7 +42,7 @@
                     axios.post(url,this.bean).then(function(response){
                         //回到初始状态
                         vue.list(0);
-                        vue.bean = {id:0,department:{id:0},name:'',account:'',password:'',sex:0,age:0,phoneNumber:0,jobTitle:0};
+                        vue.bean = {id:0,department:{id:0}};
                     });
                 },
                 deleteBean: function (id) {
@@ -96,7 +96,7 @@
             </thead>
             <tbody>
             <tr v-for="bean in beans ">
-                <td>{{bean}}</td>
+                <td>{{bean.id}}</td>
                 <!--                <td>-->
                 <!--                    <img height="40px"  :src="'img/category/'+bean.id+'.jpg'">-->
                 <!--                </td>-->
@@ -104,7 +104,7 @@
                     {{bean.name}}
                 </td>
                 <td>
-                    {{bean.departmentId}}
+                    {{bean.department.name}}
                 </td>
                 <td>
                     {{bean.sex}}
@@ -144,7 +144,7 @@
                     <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
                 <tr>
-                    <td>所属部门</td>
+                    <td>所属部门id</td>
                     <td>
                         <input  @keyup.enter="add" v-model.trim="bean.department.id" type="text" class="form-control">
 <!--                        <select @keyup.enter="add" v-model.trim="bean.departmentId" class="form-control" id="departmentId">-->
