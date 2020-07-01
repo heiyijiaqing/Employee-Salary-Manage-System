@@ -2,7 +2,6 @@ package com.how2java.tmall.service;
 
 import com.how2java.tmall.dao.BasicSalaryDAO;
 import com.how2java.tmall.pojo.BasicSalary;
-import com.how2java.tmall.pojo.User;
 import com.how2java.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

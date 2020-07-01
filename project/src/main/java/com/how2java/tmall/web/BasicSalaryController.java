@@ -12,13 +12,6 @@ import java.util.Date;
 public class BasicSalaryController {
     @Autowired BasicSalaryService basicSalaryService;
 
-//    @GetMapping("/users/{userId}/basicSalaries")
-//    public Page4Navigator<BasicSalary> list(@PathVariable("userId") int userId, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size) throws Exception {
-//        start = start<0?0:start;
-//        Page4Navigator<BasicSalary> page =basicSalaryService.list(userId, start, size,5);
-//        return page;
-//    }
-
     //DepartmentController 修改原 list 方法，接受 start 和 size 参数。
     @GetMapping("/basicSalaries")
     public Page4Navigator<BasicSalary> list(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size) throws Exception {

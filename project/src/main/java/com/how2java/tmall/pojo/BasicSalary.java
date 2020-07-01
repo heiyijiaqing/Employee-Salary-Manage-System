@@ -1,6 +1,5 @@
 package com.how2java.tmall.pojo;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
