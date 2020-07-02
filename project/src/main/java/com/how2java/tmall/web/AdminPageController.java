@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AdminPageController {
 
+    //初始进入/admin
     @GetMapping(value = "/admin")
     public String admin(){
         return "redirect:admin_department_list";
