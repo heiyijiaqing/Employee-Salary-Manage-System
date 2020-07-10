@@ -62,7 +62,7 @@ public class UserService {
         userDAO.save(bean);
     }
 
-    public User get(String name, String password) {
-        return userDAO.getByNameAndPassword(name,password);
+    public User get(String account, String password) {
+        return userDAO.getByAccountAndPassword(account,password);
     }
 }

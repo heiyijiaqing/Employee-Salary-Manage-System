@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserDAO extends JpaRepository<User,Integer> {
 //    Page<User> findByDepartment(Department category, Pageable pageable);
-    User getByNameAndPassword(String name, String password);
+    User getByAccountAndPassword(String account, String password);
 }

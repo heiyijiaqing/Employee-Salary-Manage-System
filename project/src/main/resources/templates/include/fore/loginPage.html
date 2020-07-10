@@ -4,7 +4,7 @@
             var data4Vue = {
                 uri:'forelogin',
                 result: [],
-                user:{name:'', password:''}
+                user:{account:'', password:''}
             };
             //ViewModel
             var vue = new Vue({
@@ -16,8 +16,8 @@
                 methods: {
                     login:function(){
                         var url =  this.uri;
-                        if(0==this.user.name.length){
-                            $("span.errorMessage").html("请输入用户名");
+                        if(0==this.user.account.length){
+                            $("span.errorMessage").html("请输入账号");
                             $("div.loginErrorMessageDiv").css("visibility","visible");
                             return;
                         }
@@ -64,7 +64,7 @@
 					<span class="loginInputIcon ">
 						<span class=" glyphicon glyphicon-user"></span>
 					</span>
-                <input v-model="user.name" placeholder="姓名" type="text">
+                <input v-model="user.account" placeholder="账号" type="text">
             </div>
 
             <div class="loginInput " >

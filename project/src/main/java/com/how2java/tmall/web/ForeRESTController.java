@@ -19,10 +19,10 @@ public class ForeRESTController {
 
     @PostMapping("/forelogin")
     public Object login(@RequestBody User userParam, HttpSession session) {
-        String name =  userParam.getName();
-        name = HtmlUtils.htmlEscape(name);
+        String account =  userParam.getAccount();
+        account = HtmlUtils.htmlEscape(account);
 
-        User user =userService.get(name,userParam.getPassword());
+        User user =userService.get(account,userParam.getPassword());
         if(null==user){
             String message ="账号密码错误";
             return Result.fail(message);
