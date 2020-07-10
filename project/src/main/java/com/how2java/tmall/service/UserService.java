@@ -61,4 +61,8 @@ public class UserService {
     public void update(User bean) {
         userDAO.save(bean);
     }
+
+    public User get(String name, String password) {
+        return userDAO.getByNameAndPassword(name,password);
+    }
 }

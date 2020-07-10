@@ -23,6 +23,9 @@ public class Salary {
     @JoinColumn(name="departmentId")
     private Department department;
 
+//    private BasicSalary basicSalary;
+//    private RewardPunish rewardPunish;
+
     private float totalSalary;
     private String yearMonth;
     private Date createDate;
@@ -51,6 +54,22 @@ public class Salary {
     public void setDepartment(Department department) {
         this.department = department;
     }
+
+//    public BasicSalary getBasicSalary() {
+//        return basicSalary;
+//    }
+//
+//    public void setBasicSalary(BasicSalary basicSalary) {
+//        this.basicSalary = basicSalary;
+//    }
+//
+//    public RewardPunish getRewardPunish() {
+//        return rewardPunish;
+//    }
+//
+//    public void setRewardPunish(RewardPunish rewardPunish) {
+//        this.rewardPunish = rewardPunish;
+//    }
 
     public float getTotalSalary() {
         return totalSalary;
