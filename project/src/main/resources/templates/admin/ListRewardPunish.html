@@ -13,7 +13,8 @@
             beans: [],
             bean: {id:0,user:{id:0}},
             pagination:{},
-            user:''
+            user:'',
+            typeMap:{0:'市场部销售提成', 1:'节日福利奖金',2:'年终奖金',3:'迟到', 4:'旷工', 5:'周末加班',6:'节日加班'}
         };
 
         //ViewModel
@@ -88,7 +89,7 @@
                 <th>奖惩类型</th>
                 <th>描述奖惩类型的具体内容</th>
                 <th>奖惩金额</th>
-                <th>保存奖惩所属年月</th>
+                <th>奖惩所属年月</th>
                 <th>编辑</th>
                 <th>删除</th>
             </tr>
@@ -105,7 +106,7 @@
                     {{bean.user.department.name}}
                 </td>
                 <td>
-                    {{bean.type}}
+                    {{typeMap[bean.type]}}
                 </td>
                 <td>
                     {{bean.remark}}

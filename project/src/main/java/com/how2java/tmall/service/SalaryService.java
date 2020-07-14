@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 public class SalaryService {
     @Autowired SalaryDAO salaryDAO;
     @Autowired UserService userService;
-    @Autowired DepartmentService departmentService;
 
     public void add(Salary bean) {
         salaryDAO.save(bean);

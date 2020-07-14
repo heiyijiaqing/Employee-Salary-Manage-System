@@ -155,7 +155,7 @@
                 <th>旷工扣薪标准</th>
                 <th>周末加班薪资标准</th>
                 <th>节日加班薪资标准</th>
-                <th>编辑</th>
+                <th th:if="${4==session.user.jobTitle}">编辑</th>
                 <th>删除</th>
             </tr>
             </thead>
@@ -185,7 +185,7 @@
                 <td>
                     {{bean.holidayOverWorkMoney}}
                 </td>
-                <td>
+                <td th:if="${4==session.user.jobTitle}">
                     <a :href="'admin_basicsalary_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
                 <td>
