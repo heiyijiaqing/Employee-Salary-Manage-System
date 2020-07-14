@@ -28,7 +28,7 @@ public class User {
     private String name;
     private int sex;
     private int age;
-    private int phoneNumber;
+    private String phoneNumber;
     private int jobTitle;
     private Date createDate;
     private int isDel;
@@ -105,11 +105,11 @@ public class User {
         this.age = age;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

@@ -119,15 +119,31 @@
                 </tr>
                 <tr>
                     <td>性别</td>
-                    <td><input  @keyup.enter="update" v-model.trim="bean.sex" type="text" class="form-control"></td>
+                    <td>
+<!--                        <input  @keyup.enter="update" v-model.trim="bean.sex" type="text" class="form-control">-->
+                        <select v-model="bean.sex" name="sex">
+                            <option @keyup.enter="update"  value="1">男</option>
+                            <option @keyup.enter="update"  value="0">女</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>年龄</td>
-                    <td><input  @keyup.enter="update" v-model.trim="bean.age" type="text" class="form-control"></td>
+                    <td>
+                        <input  @keyup.enter="update" v-model.trim="bean.age" type="text" class="form-control">
+                    </td>
                 </tr>
                 <tr>
                     <td>职位</td>
-                    <td><input  @keyup.enter="update" v-model.trim="bean.jobTitle" type="text" class="form-control"></td>
+                    <td>
+<!--                        <input  @keyup.enter="update" v-model.trim="bean.jobTitle" type="text" class="form-control">-->
+                        <select v-model="bean.jobTitle" name="jobTitle">
+                            <option @keyup.enter="update"  value="0">普通员工</option>
+                            <option @keyup.enter="update"  value="1">部门经理</option>
+                            <option @keyup.enter="update"  value="2">系统管理员</option>
+                            <option @keyup.enter="update"  value="3">人力资源工作人员</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>电话号码</td>

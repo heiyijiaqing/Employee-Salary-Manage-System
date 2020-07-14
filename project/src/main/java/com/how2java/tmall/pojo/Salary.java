@@ -19,6 +19,10 @@ public class Salary {
     @JoinColumn(name="userId")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name="basicSalaryId")
+    private BasicSalary basicSalary;
+
     private float totalSalary;
     private String yearMonth;
     private Date createDate;
@@ -38,6 +42,14 @@ public class Salary {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public BasicSalary getBasicSalary() {
+        return basicSalary;
+    }
+
+    public void setBasicSalary(BasicSalary basicSalary) {
+        this.basicSalary = basicSalary;
     }
 
     public float getTotalSalary() {

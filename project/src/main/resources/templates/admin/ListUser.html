@@ -16,7 +16,8 @@
             pagination:{},
             department:'',
             sexMap:{0:'女',1:'男'}, //性别：把数字转换为对应的文字
-            jobTitleMap:{0:'普通员工',1:'部门经理',3:'系统管理员',4:'人力资源工作人员'} //职位：把数字转换为对应的文字
+            jobTitleMap:{0:'普通员工',1:'部门经理',2:'系统管理员',3:'人力资源工作人员'}, //职位：把数字转换为对应的文字
+            // selected:0
         };
 
         //ViewModel
@@ -168,7 +169,13 @@
                 </tr>
                 <tr>
                     <td>性别</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.sex" type="text" class="form-control"></td>
+                    <td>
+<!--                        <input  @keyup.enter="add" v-model.trim="bean.sex" type="text" class="form-control">-->
+                        <select v-model="bean.sex" name="sex">
+                            <option @keyup.enter="add"  value="1">男</option>
+                            <option @keyup.enter="add"  value="0">女</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>年龄</td>
@@ -176,7 +183,15 @@
                 </tr>
                 <tr>
                     <td>职位</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.jobTitle" type="text" class="form-control"></td>
+                    <td>
+<!--                        <input  @keyup.enter="add" v-model.trim="bean.jobTitle" type="text" class="form-control">-->
+                        <select v-model="bean.jobTitle" name="jobTitle">
+                            <option @keyup.enter="add"  value="0">普通员工</option>
+                            <option @keyup.enter="add"  value="1">部门经理</option>
+                            <option @keyup.enter="add"  value="0">系统管理员</option>
+                            <option @keyup.enter="add"  value="1">人力资源工作人员</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>电话号码</td>

@@ -140,7 +140,18 @@
                 </tr>
                 <tr>
                     <td>奖惩类型</td>
-                    <td><input  @keyup.enter="add"  v-model.trim="bean.type" type="text" class="form-control"></td>
+                    <td>
+<!--                        <input  @keyup.enter="add"  v-model.trim="bean.type" type="text" class="form-control">-->
+                        <select v-model="bean.type" name="sex">
+                            <option @keyup.enter="add"  value="0">市场部销售提成</option>
+                            <option @keyup.enter="add"  value="1">节日福利奖金</option>
+                            <option @keyup.enter="add"  value="2">年终奖金</option>
+                            <option @keyup.enter="add"  value="3">迟到</option>
+                            <option @keyup.enter="add"  value="4">旷工</option>
+                            <option @keyup.enter="add"  value="5">周末加班</option>
+                            <option @keyup.enter="add"  value="6">节日加班</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>描述奖惩类型的具体内容</td>
